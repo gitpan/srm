@@ -1,0 +1,18 @@
+#!/bin/sh
+
+#=======================================
+#===Author  : huang.shuai            ===
+#===Email   : huang.shuai@adways.net ===
+#===MSN     : huang.shuai@adways.net ===
+#=======================================
+
+chmod 0755 ./srm
+
+if test ! -e /usr/local/bin/srm
+then
+    cp ./srm /usr/local/bin/srm
+fi
+
+echo "alias rm=\'echo please use srm instead, if you really want rm, use /bin/rm\'" >> ~/.bashrc
+
+exit 0

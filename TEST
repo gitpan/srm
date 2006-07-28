@@ -1,0 +1,31 @@
+TEST CASES
+
+1. /var/.Trash exist, with write and execute permission.
+   #file should be move into /var/.Trash
+
+2. /var/.Trash not exist, can be create.
+   #directory /var/.Trash should be created, file should be move into /var/.Trash
+
+3. /var/.Trash exist, without write and execute permission,
+   $ENV{HOME}.'/Trash' not exist, can not be create.
+   #should die
+
+4. /var/.Trash not exist, can not be create,
+   $ENV{HOME}.'/Trash' not exist, can not be create.
+   #should die
+
+5. /var/.Trash exist, without write and execute permission,
+   $ENV{HOME}.'/Trash' not exist, can be create.
+   #directory $ENV{HOME}.'/Trash' should be created, file should be move into $ENV{HOME}.'/Trash'
+
+6. /var/.Trash not exist, can not be create,
+   $ENV{HOME}.'/Trash' not exist, can be create.
+   #directory $ENV{HOME}.'/Trash' should be created, file should be move into $ENV{HOME}.'/Trash'
+
+7. /var/.Trash exist, without write and execute permission,
+   $ENV{HOME}.'/Trash' exist.
+   #file should be move into $ENV{HOME}.'/Trash'
+
+8. /var/.Trash not exist, can not be create,
+   $ENV{HOME}.'/Trash' exist.
+   #file should be move into $ENV{HOME}.'/Trash'

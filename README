@@ -1,0 +1,27 @@
+OVERVIEW
+
+The srm script aims to the remove operation (rm) more safer
+
+It move the files and directories into a "recycle box"
+
+
+INSTALLATION
+
+To install this module type the following in the distribution directory:
+
+	make install
+
+
+USAGE
+
+You can safely remove your files and directories by:
+
+    #srm <File name | Directory name> [<File name | Directory name> ...]
+
+    for example:
+
+    #srm file1 file2 dir1 dir2
+
+
+Author
+	QIAN YU / foolfish@cpan.org

@@ -1,0 +1,106 @@
+#!/usr/bin/perl
+use strict;
+use warnings(FATAL=>'all');
+
+#===================================
+#===Module  : StdSys::Script::srm
+#===File    : srm
+#===Comment : safe delete file script
+#===================================
+
+#===================================
+#===Author  : qian.yu            ===
+#===Email   : foolfish@cpan.org  ===
+#===MSN     : qian.yu@adways.net ===
+#===QQ      : 19937129           ===
+#===Homepage: www.lua.cn         ===
+#===================================
+
+#===1.0.1(2006-07-07): fix bugs
+#===1.0.0(2006-06-09): first release
+
+#===srm usage note
+#
+#   chmod 0755 ./srm
+#   cp ./srm /usr/local/bin
+#   srm file1 file2 dir1 dir2
+#
+#===================================
+
+#===additional security advise
+#
+#   vi ~/.bashrc
+# 
+#   add this line to end of file  
+#
+#       alias rm='echo please use srm instead, if you really want rm, use /bin/rm'
+#
+#===================================
+
+my $trash_dir=undef;
+my $trash_dir_1=$ENV{HOME}.'/Trash';
+my $trash_dir_2='/var/.Trash';
+
+my $param=[@ARGV]; 
+
+
+#    	if(-e $trash_dir_1){
+#    		$trash_dir=$trash_dir_1;
+#    	}
+#       print "create trash_dir fail, exit\n";
+#       exit 0;
+
+if(-e $trash_dir_2){
+	if(-w $trash_dir_2 && -x $trash_dir_2 ){
+		$trash_dir=$trash_dir_2;
+	}else{
+	
+	}
+}else{
+    if(mkdir $trash_dir_2){
+		$trash_dir=$trash_dir_2;
+    }else{
+
+    }
+}
+
+if(!defined($trash_dir)){
+	if(! -e $trash_dir_1){
+    	if(!mkdir $trash_dir_1){
+    	    print "create trash_dir fail, exit\n";
+    	    exit 0;
+    	}else{
+            $trash_dir=$trash_dir_1;
+        }
+	}else{
+		$trash_dir=$trash_dir_1;
+	}
+}
+
+my $t=[localtime(CORE::time())];
+my $dir=sprintf('srm_%04s-%02s-%02sT%02s.%02s.%02s',$t->[5]+1900,$t->[4]+1,$t->[3],$t->[2],$t->[1],$t->[0]);
+my $tmp_dir=$dir;
+
+my $bool_succ='';
+for(1..100){
+    if(mkdir $trash_dir.'/'.$tmp_dir){
+        $bool_succ=1;last;
+    }else{
+        $tmp_dir=$dir.'_'.int(rand(99999));
+    }
+}
+
+if(!$bool_succ){
+	print "too much conflict, so exit\n";
+}
+
+foreach(@$param){
+    system("/bin/mv $_  $trash_dir/$tmp_dir");
+}
+
+print "your files have been moved to $trash_dir/$tmp_dir\n";
+
+1;
+
+__END__
+
